@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "Google Search Prompts",
+    "version": "1.0",
+    "description": "Auto-suggests advanced Google search prompts.",
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+      }
+    },
+    "permissions": ["activeTab"],
+    "commands": {
+      "showPrompts": {
+        "suggested_key": {
+          "default": "Alt+Shift+K"  
+        },
+        "description": "Show all prompts"
+      }
+    },
+    "background": {
+      "service_worker": "background.js"
+    }
+  }
+  

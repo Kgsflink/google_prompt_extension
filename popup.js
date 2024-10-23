@@ -1,0 +1,366 @@
+const prompts =
+    [
+        'site:linkedin.com "software engineer jobs"',
+        'site:github.com "python projects"',
+        'site:researchgate.net "deep learning research"',
+        'site:nytimes.com "climate change"',
+        'site:wikipedia.org "quantum mechanics"',
+        'site:medium.com "startups"',
+        'site:stackoverflow.com "javascript error handling"',
+        'site:ted.com "inspirational talks"',
+        'site:bbc.com "global news"',
+        'site:spotify.com "relaxing music"',
+        'site:arxiv.org "AI whitepapers"',
+        'site:docs.google.com "project management templates"',
+        'site:twitter.com "blockchain discussions"',
+        'site:gov.in "digital India initiatives"',
+        'site:youtube.com "productivity hacks"',
+        'site:cnn.com "latest tech news"',
+        'site:facebook.com "community events"',
+        'site:instagram.com "travel photography"',
+        'site:quora.com "investment strategies"',
+        'site:wordpress.com "blogging tips"',
+
+        // Link Searches
+        'link:example.com',
+        'link:bbc.com',
+        'link:nytimes.com',
+        'link:cnn.com',
+        'link:github.com',
+        'link:medium.com',
+
+        // Cached Searches
+        'cache:example.com',
+        'cache:nytimes.com',
+        'cache:github.com',
+        'cache:bbc.com',
+        'cache:medium.com',
+        'cache:arxiv.org',
+
+        // File Type Searches
+        'filetype:xls "market analysis"',
+        'filetype:pdf "artificial intelligence research"',
+        'filetype:doc "marketing strategy template"',
+        'filetype:ppt "sales presentation"',
+        'filetype:csv "financial data"',
+        'filetype:jpg "landscape photography"',
+        'filetype:mp4 "product demo video"',
+        'filetype:mp3 "soothing sounds"',
+        'filetype:txt "code snippets"',
+        'filetype:json "API documentation"',
+        'filetype:xml "sitemap"',
+        'filetype:svg "website icons"',
+        'filetype:xlsx "inventory management"',
+        'filetype:pdf "government policy report"',
+        'filetype:html "web templates"',
+        'filetype:csv "user data analysis"',
+        'filetype:doc "employee handbook"',
+        'filetype:xls "budget planning spreadsheet"',
+        'filetype:pdf "whitepaper on cybersecurity"',
+
+        // Educational/Research Searches
+        'site:.edu "machine learning courses"',
+        'site:researchgate.net "climate change models"',
+        'site:arxiv.org "quantum computing paper"',
+        'filetype:pdf "neural network models"',
+        'site:mit.edu "robotics innovation"',
+        'site:stanford.edu "AI research"',
+        'site:edu "cybersecurity education"',
+        'site:harvard.edu "sociology research"',
+        'site:berkeley.edu "data science syllabus"',
+        'site:ox.ac.uk "psychology studies"',
+
+        // Related Searches
+        'related:youtube.com',
+        'related:netflix.com',
+        'related:spotify.com',
+        'related:nytimes.com',
+        'related:github.com',
+        'related:quora.com',
+        'related:stackoverflow.com',
+        'related:medium.com',
+        'related:arxiv.org',
+        'related:cnn.com',
+        'related:linkedin.com',
+
+        // Social Media Searches
+        'site:twitter.com "climate change conversation"',
+        'site:facebook.com "community outreach program"',
+        'site:instagram.com "fitness influencers"',
+        'site:linkedin.com "project management tools"',
+        'site:reddit.com "cryptocurrency trading advice"',
+        'site:quora.com "remote working tips"',
+        'site:twitter.com "machine learning discussion"',
+        'site:linkedin.com "job openings in finance"',
+        'site:instagram.com "food photography"',
+        'site:pinterest.com "interior design ideas"',
+        'site:tiktok.com "dance trends"',
+
+        // Time-Based Searches
+        '"cloud computing" after:2023',
+        '"quantum computing" before:2020',
+        '"electric vehicle market" after:2022',
+        '"latest startup trends" after:2023',
+        '"economic crisis" before:2008',
+        '"technology conferences" after:2024',
+        '"election results" before:2020',
+        '"artificial intelligence" after:2018',
+        '"blockchain trends" after:2021',
+        '"renewable energy" before:2017',
+
+        // Error and Vulnerability Searches
+        '"404 error" site:example.com',
+        '"500 internal server error" site:example.com',
+        '"SQL injection vulnerability" site:github.com',
+        '"cross-site scripting vulnerability" filetype:pdf',
+        '"CVE-2024 vulnerability"',
+        '"code injection flaw" site:stackoverflow.com',
+        '"authorization error" filetype:txt',
+        '"buffer overflow vulnerability" site:arxiv.org',
+        '"malware attack" site:gov"',
+        '"vulnerability patch" filetype:pdf',
+
+        // Multimedia Searches
+        'ext:jpg "abstract art"',
+        'ext:mp4 "product demo video"',
+        'ext:gif "funny memes"',
+        'ext:png "web design mockup"',
+        'ext:mp3 "background music for videos"',
+        'ext:svg "free icons"',
+        'ext:mov "event highlights"',
+        'ext:wav "audio samples"',
+        'ext:jpeg "portrait photography"',
+        'ext:avi "tutorial video"',
+        'ext:tiff "high-resolution images"',
+
+        // Location-Based Searches
+        '"sustainable farming" location:india',
+        '"startup ecosystem" location:silicon valley',
+        '"covid-19 policy" location:china',
+        '"renewable energy" location:germany',
+        '"fashion industry" location:paris',
+        '"real estate market" location:new york',
+        '"tourist attractions" location:japan',
+        '"automotive industry" location:germany',
+        '"wildlife conservation" location:africa',
+        '"election updates" location:brazil',
+        '"500 internal server error" troubleshooting guide',
+        '"NullPointerException" java solution',
+        '"403 forbidden error" apache server',
+        '"404 not found error" website debugging',
+        '"syntax error" python',
+        '"unexpected token" javascript',
+        '"segmentation fault" linux',
+        '"access denied" mysql database',
+        '"permission denied" linux chmod',
+        '"index out of bounds" java exception handling',
+        '"ssl certificate error" browser',
+        '"authentication failed" smtp email server',
+        '"parsing error" xml java',
+        '"driver not found" database connection java',
+        '"network timeout" API request',
+        '"denied access" docker container',
+        '"session expired" login issue',
+        '"unable to connect to server" cloud error',
+        '"server error" email service',
+        '"failed to fetch" javascript api',
+
+        // Vulnerability and Exploit Searches
+        '"XSS vulnerability" "exploit example"',
+        '"SQL injection vulnerability" "how to exploit"',
+        '"buffer overflow vulnerability" tutorial',
+        '"remote code execution" exploit',
+        '"CVE-2024 exploit" example',
+        '"brute force attack" tutorial',
+        '"cross-site scripting" vulnerability detection',
+        '"zero-day vulnerability" report',
+        '"vulnerability disclosure" process',
+        '"shellshock exploit" demonstration',
+        '"command injection exploit" example',
+        '"privilege escalation" exploit',
+        '"denial of service" vulnerability',
+        '"man-in-the-middle attack" detection tools',
+        '"ransomware exploit" analysis',
+        '"crypto wallet vulnerability" research',
+        '"exploiting XXE vulnerability" xml parser',
+        '"session hijacking" exploit example',
+        '"CVE scanner tool"',
+        '"password cracking" tutorial',
+
+        // Programming Concepts and Code Searches
+        '"python recursion" example',
+        '"java multithreading" tutorial',
+        '"c++ pointer vs reference"',
+        '"javascript async await" tutorial',
+        '"css flexbox layout" guide',
+        '"docker containerization" tutorial',
+        '"python socket programming" guide',
+        '"linux bash scripting" examples',
+        '"react hooks" tutorial',
+        '"machine learning algorithms" python',
+        '"graphql vs rest" api comparison',
+        '"unit testing in python" example',
+        '"event-driven programming" java example',
+        '"python django web framework" introduction',
+        '"flask api development" tutorial',
+        '"react native vs flutter" comparison',
+        '"tailwind css utility classes" guide',
+        '"redux state management" tutorial',
+        '"building api with node.js" tutorial',
+        '"deploying python app on heroku" guide',
+
+        // Business and Marketing Searches
+        '"growth hacking techniques" for startups',
+        '"seo strategy" 2024 trends',
+        '"digital marketing automation tools"',
+        '"B2B lead generation" tactics',
+        '"content marketing strategy" for small business',
+        '"influencer marketing campaign" case study',
+        '"competitive market analysis" tools',
+        '"customer retention strategies" ecommerce',
+        '"business plan template" for startups',
+        '"email marketing best practices" guide',
+        '"business model canvas" example',
+        '"market segmentation" techniques',
+        '"SWOT analysis" for startups',
+        '"pricing strategy" SaaS products',
+        '"brand positioning statement" examples',
+        '"social media marketing tools" comparison',
+        '"financial forecasting" for startups',
+        '"investor pitch deck" template',
+        '"business growth strategies" 2024 trends',
+        '"sales funnel optimization" guide',
+
+        // Legal and Compliance Searches
+        '"GDPR compliance" checklist',
+        '"privacy policy template" for websites',
+        '"data protection laws" by country',
+        '"terms and conditions" generator',
+        '"intellectual property protection" for startups',
+        '"cybersecurity compliance" for small businesses',
+        '"NDA template" for partnerships',
+        '"remote work legal compliance"',
+        '"patent application process" in the US',
+        '"business license requirements" by state',
+        '"HIPAA compliance" healthcare companies',
+        '"export control compliance" for technology companies',
+        '"trademark registration process"',
+        '"employment contract template"',
+        '"data breach notification laws"',
+        '"anti-money laundering compliance"',
+        '"consumer protection laws" ecommerce',
+        '"fair use policy" for digital content',
+        '"corporate governance best practices"',
+        '"legal risks for startups" guide',
+
+        // Ethical Hacking and Penetration Testing
+        '"ethical hacking tutorials for beginners"',
+        '"penetration testing tools" open source',
+        '"metasploit framework" tutorial',
+        '"nmap usage for network scanning"',
+        '"OWASP top 10 vulnerabilities" explanation',
+        '"reverse engineering" malware analysis',
+        '"web application pentesting" guide',
+        '"wireless network hacking" tools',
+        '"social engineering techniques" for penetration testing',
+        '"ethical hacking certification" online courses',
+        '"penetration testing report" template',
+        '"cybersecurity risk assessment" guide',
+        '"ethical hacking with Kali Linux"',
+        '"post-exploitation techniques" hacking',
+        '"malware analysis" using reverse engineering',
+        '"exploiting buffer overflow vulnerabilities"',
+        '"password cracking techniques" brute force',
+        '"network traffic analysis" tools for penetration testing',
+        '"ethical hacking career path" guide',
+        '"hacking Windows servers" tutorial',
+
+        // Finance and Investments
+        '"cryptocurrency investment strategies" 2024',
+        '"stock market analysis tools"',
+        '"forex trading strategies" for beginners',
+        '"investment portfolio management tools"',
+        '"cryptocurrency market trends" 2024',
+        '"financial modeling templates" for startups',
+        '"investment risk assessment tools"',
+        '"angel investing opportunities" 2024',
+        '"VC funding" for tech startups',
+        '"real estate investment trends" 2024',
+        '"blockchain technology investment opportunities"',
+        '"startup equity distribution" guide',
+        '"stock options for employees" benefits',
+        '"financial statements analysis" tools',
+        '"mutual funds vs ETFs" comparison',
+        '"cryptocurrency tax regulations" by country',
+        '"dividend growth investing strategy"',
+        '"building an emergency fund" guide',
+        '"financial planning for retirement"',
+        '"market volatility strategies" investments',
+
+        // Coding Challenges and Interview Prep
+        '"python coding challenges" for beginners',
+        '"java coding interview questions" for practice',
+        '"dynamic programming interview questions"',
+        '"system design interview questions" guide',
+        '"leetcode alternatives" for coding practice',
+        '"coding bootcamp interview prep"',
+        '"c++ data structures and algorithms" guide',
+        '"python string manipulation" examples',
+        '"big O notation" explanation with examples',
+        '"sorting algorithms comparison" python vs java',
+        '"full stack developer interview questions"',
+        '"coding challenges for frontend developers"',
+        '"java collections framework interview questions"',
+        '"python list comprehension" tutorial',
+        '"hashmap vs hashtable" java interview question',
+        '"sql database normalization" interview questions',
+        '"technical interview mock questions" python',
+        '"binary search algorithm" coding example',
+        '"python decorators" interview question explanation',
+        '"javascript closures" interview question guide',
+
+
+        '"how to hack a website" tutorial',
+        '"download cracked software" free',
+        '"buy stolen credit card numbers" dark web',
+        '"create undetectable malware" for windows',
+        '"how to perform a DDoS attack" tools',
+        '"phishing email templates" download',
+        '"SQL injection tools" for hacking databases',
+        '"free ransomware download" executable',
+        '"how to bypass antivirus detection" malware creation',
+        '"remote access trojan (RAT) download" for windows',
+
+
+
+        '"free python programming course" filetype:pdf', '"open source software download" site:github.com', '"creative commons videos" free download', '"free stock images" download site:unsplash.com', '"public domain ebooks" download', '"free university lecture videos" filetype:mp4', '"free coding tutorials" video download site:youtube.com', '"royalty free music" download for projects', '"free graphic design templates" download', '"free online certification courses" filetype:pdf']
+    ;
+
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput');
+    const promptList = document.getElementById('promptList');
+
+    // Display all prompts initially
+    displayPrompts(prompts);
+
+    // Filter prompts based on user input
+    searchInput.addEventListener('input', function () {
+        const filteredPrompts = prompts.filter(prompt =>
+            prompt.toLowerCase().includes(searchInput.value.toLowerCase())
+        );
+        displayPrompts(filteredPrompts);
+    });
+
+    function displayPrompts(prompts) {
+        promptList.innerHTML = '';
+        prompts.forEach(prompt => {
+            const li = document.createElement('li');
+            li.textContent = prompt;
+            li.addEventListener('click', function () {
+                navigator.clipboard.writeText(prompt);
+                alert('Copied to clipboard: ' + prompt);
+            });
+            promptList.appendChild(li);
+        });
+    }
+});
